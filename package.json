@@ -1,0 +1,165 @@
+{
+    "name": "tni-app-preview",
+    "version": "0.1.0",
+    "description": "Preview App of Taman Nasional Indonesia",
+    "main": "webpack-deploy/browser.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "android": "npm run android:prepare-unsigned-build && cordova run android --device",
+        "android:prepare-build": "npm run android:build && cordova prepare android",
+        "android:prepare-unsigned-build": "npm run android:build-unsigned && cordova prepare android",
+        "android:build-unsigned": "cross-env MOBILE_PLATFORM=\"android\" NODE_ENV=\"development\" webpack --config webpack-deploy/mobile-devices.js --progress && npm run copy",
+        "android:build": "cross-env MOBILE_PLATFORM=\"android\" NODE_ENV=\"production\" webpack --config webpack-deploy/mobile-devices.js --progress -p && npm run copy",
+        "build:ios": "cross-env MOBILE_PLATFORM=\"ios\" NODE_ENV=\"development\" webpack --config webpack-deploy/mobile-devices.js --progress && npm run copy",
+        "clean:windows": "rmdir /s /q ./www",
+        "copy": "copyfiles \"font/**.*\" www",
+        "build-signed:ios": "cross-env MOBILE_PLATFORM=\"ios\" NODE_ENV=\"production\" webpack --config webpack-deploy/mobile-devices.js --progress -p && npm run copy",
+        "start": "npm run start:android",
+        "start:ios": "cross-env MOBILE_PLATFORM=\"ios\" webpack-dev-server --config webpack-deploy/browser.js",
+        "start:android": "cross-env MOBILE_PLATFORM=\"android\" webpack-dev-server --config webpack-deploy/browser.js",
+        "test": "cross-env NODE_ENV=\"test\" mocha --compilers js:babel-core/register -r mock-local-storage ./test/setup.js \"src/**/**/*.spec.@(js|jsx)\"",
+        "test-cov": "cross-env NODE_ENV=\"test\" nyc mocha --compilers js:babel-core/register -r mock-local-storage ./test/setup.js \"src/**/**/*.spec.@(js|jsx)\"",
+        "test:watch": "npm run test -- --watch --watch-extensions js jsx",
+        "test-backup": "cross-env NODE_ENV=\"test\" mocha --compilers js:babel-core/register --require ./test/setup-backup.js \"src/**/**/**/*.spec.@(js|jsx)\"",
+        "test-backup:watch": "npm run test-backup -- --watch --watch-extensions js jsx"
+    },
+    "babel": {
+        "presets": [
+            [
+                "es2015",
+                {
+                    "modules": false
+                }
+            ],
+            "stage-2",
+            "react"
+        ],
+        "plugins": [
+            "react-hot-loader/babel",
+            "transform-object-rest-spread"
+        ],
+        "env": {
+            "production": {
+                "plugins": [
+                    "transform-react-constant-elements",
+                    "transform-react-inline-elements"
+                ]
+            },
+            "test": {
+                "plugins": [
+                    "transform-es2015-modules-commonjs"
+                ]
+            }
+        }
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "autoprefixer": "7.1.0",
+        "babel-core": "6.24.1",
+        "babel-loader": "7.0.0",
+        "babel-plugin-transform-object-rest-spread": "6.23.0",
+        "babel-plugin-transform-react-constant-elements": "6.23.0",
+        "babel-plugin-transform-react-inline-elements": "6.22.0",
+        "babel-polyfill": "6.23.0",
+        "babel-preset-es2015": "6.24.1",
+        "babel-preset-react": "6.24.1",
+        "babel-preset-stage-2": "6.24.1",
+        "babel-runtime": "6.23.0",
+        "browser-sync": "2.18.11",
+        "browser-sync-webpack-plugin": "1.1.4",
+        "chai": "3.5.0",
+        "chai-enzyme": "0.6.1",
+        "chai-immutable": "1.6.0",
+        "clean-webpack-plugin": "0.1.16",
+        "copy-webpack-plugin": "2.1.6",
+        "copyfiles": "1.2.0",
+        "cross-env": "5.0.0",
+        "css-loader": "0.28.1",
+        "enzyme": "2.8.2",
+        "extract-loader": "0.1.0",
+        "extract-text-webpack-plugin": "2.1.0",
+        "file-loader": "0.11.1",
+        "html-webpack-plugin": "2.28.0",
+        "image-webpack-loader": "3.3.1",
+        "jsdom": "10.1.0",
+        "jsdom-global": "3.0.2",
+        "less": "2.7.2",
+        "less-loader": "4.0.3",
+        "mocha": "3.4.1",
+        "node-sass": "4.5.2",
+        "postcss-amp": "1.0.12",
+        "postcss-loader": "2.0.5",
+        "precss": "1.4.0",
+        "purifycss-webpack": "0.6.2",
+        "react-addons-test-utils": "15.5.1",
+        "react-hot-loader": "3.0.0-beta.6",
+        "react-test-renderer": "15.5.4",
+        "sass-loader": "6.0.5",
+        "standard": "10.0.2",
+        "standard-loader": "6.0.1",
+        "style-loader": "0.17.0",
+        "url-loader": "0.5.8",
+        "webpack": "2.5.1",
+        "webpack-dev-server": "2.4.5",
+        "webpack-livereload-plugin": "0.11.0",
+        "write-file-webpack-plugin": "4.0.2"
+    },
+    "dependencies": {
+        "axios": "0.16.1",
+        "classnames": "2.2.5",
+        "cordova-plugin-background-mode": "~0.7.2",
+        "cordova-plugin-crosswalk-webview": "~2.3.0",
+        "cordova-plugin-device": "~1.1.5",
+        "cordova-plugin-google-analytics": "1.8.2",
+        "cordova-plugin-splashscreen": "~4.0.2",
+        "font-awesome": "4.7.0",
+        "framework7": "1.6.0",
+        "immutable": "3.8.1",
+        "ionicons": "3.0.0",
+        "moment": "2.18.1",
+        "numbro": "1.11.0",
+        "react": "15.5.4",
+        "react-dom": "15.5.4",
+        "cordova-android": "~6.2.3",
+        "cordova-plugin-whitelist": "1"
+    },
+    "standard": {
+        "globals": [
+            "f7",
+            "$",
+            "Framework7",
+            "Dom7",
+            "device",
+            "cordova",
+            "main"
+        ]
+    },
+    "browserslist": [
+        "iOS >= 7",
+        "android >= 4",
+        "ie >= 9"
+    ],
+    "cordova": {
+        "platforms": [
+            "android"
+        ],
+        "plugins": {
+            "cordova-plugin-background-mode": {},
+            "cordova-plugin-crosswalk-webview": {
+                "XWALK_VERSION": "23+",
+                "XWALK_LITEVERSION": "xwalk_core_library_canary:17+",
+                "XWALK_COMMANDLINE": "--disable-pull-to-refresh-effect",
+                "XWALK_MODE": "embedded",
+                "XWALK_MULTIPLEAPK": "true"
+            },
+            "cordova-plugin-device": {},
+            "cordova-plugin-google-analytics": {},
+            "cordova-plugin-splashscreen": {},
+            "cordova-plugin-whitelist": {}
+        }
+    }
+}

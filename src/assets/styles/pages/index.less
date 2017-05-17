@@ -1,0 +1,36 @@
+#index-navbar {
+  .smaller-font-when-use-mobile();
+}
+
+#index-content {
+  padding-top: 56px !important;
+  // padding-bottom: 72px;
+}
+
+.swiper-slide {
+  width: 100% !important;
+  background-color: @themeColor;
+
+  img {
+    width: inherit;
+    @media (min-width: 768px) {
+      height: 50vh !important;
+      object-fit: cover;
+    }
+  }
+}
+
+.region-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  p {
+    margin-top: 0;
+    text-align: center;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+}

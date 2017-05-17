@@ -1,0 +1,20 @@
+.navbar {
+
+  &.navbar-transparent {
+    background: none;
+
+    &:before {
+      content: " ";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      .transparent-gradient(fade(@fullBlack, 40%), transparent)
+    }
+
+    &:after {
+      background-color: transparent;
+    }
+  }
+}
