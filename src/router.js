@@ -1,4 +1,4 @@
-import 'framework7'
+import Dom7 from 'dom7'
 
 export const $ = Dom7
 window.$ = $
